@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Midterm Test</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1,
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .question {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .correct-answer {
+            background-color: green;
+        }
+
+        .wrong-answer {
+            background-color: red;
+        }
+
+        .unanswered {
+            background-color: lightgray;
+        }
+
+        #score {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #score-modal {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Midterm Test</h1>
+    <form id="quiz-form">
+        <!-- Section 1: Strings -->
+        <div class="question">
+            <h2>Section 1: Strings</h2>
+            <p>1. What is the primary difference between a `String` and an `&str` in Rust?</p>
+            <input type="radio" name="q1" value="a"> `String` is immutable, while `&str` is mutable.<br>
+            <input type="radio" name="q1" value="b"> `String` is stack-allocated, while `&str` is heap-allocated.<br>
+            <input type="radio" name="q1" value="c"> `String` is dynamically sized, while `&str` is a fixed-size
+            array.<br>
+            <input type="radio" name="q1" value="d"> `String` is owned, while `&str` is a borrowed reference.<br>
+        </div>
+
+        <div class="question">
+            <p>2. What is string slicing in Rust?</p>
+            <input type="radio" name="q2" value="a"> Converting a `String` to an `&str`.<br>
+            <input type="radio" name="q2" value="b"> Extracting a substring from a string.<br>
+            <input type="radio" name="q2" value="c"> Merging two strings together.<br>
+            <input type="radio" name="q2" value="d"> Finding the length of a string.<br>
+        </div>
+
+        <div class="question">
+            <p>3. What is the purpose of the `String::from` function in Rust?</p>
+            <input type="radio" name="q3" value="a"> Converts an `&str` to a `String`.<br>
+            <input type="radio" name="q3" value="b"> Converts a `String` to an `&str`.<br>
+            <input type="radio" name="q3" value="c"> Checks if two strings are equal.<br>
+            <input type="radio" name="q3" value="d"> Counts the number of characters in a string.<br>
+        </div>
+
+        <!-- Section 2: Ownership -->
+        <div class="question">
+            <h2>Section 2: Ownership</h2>
+            <p>4. When does a value in Rust get dropped?</p>
+            <input type="radio" name="q4" value="a"> When it goes out of scope.<br>
+            <input type="radio" name="q4" value="b"> When it is created.<br>
+            <input type="radio" name="q4" value="c"> When it is borrowed.<br>
+            <input type="radio" name="q4" value="d"> When it is cloned.<br>
+        </div>
+
+        <div class="question">
+            <p>5. What happens if you try to use a variable after transferring its ownership to another variable using
+                the
+                `=` operator?</p>
+            <input type="radio" name="q5" value="a"> It results in a compile-time error.<br>
+            <input type="radio" name="q5" value="b"> It creates a copy of the original variable.<br>
+            <input type="radio" name="q5" value="c"> It creates a reference to the original variable.<br>
+            <input type="radio" name="q5" value="d"> It reverts the ownership back to the original variable.<br>
+        </div>
+
+        <!-- Section 3: Vectors -->
+        <div class="question">
+            <h2>Section 3: Vectors</h2>
+            <p>6. What is the primary difference between a vector's length and capacity in Rust?</p>
+            <input type="radio" name="q6" value="a"> Length refers to the number of elements, and capacity is the
+            maximum
+            size.<br>
+            <input type="radio" name="q6" value="b"> Length refers to the maximum size, and capacity is the number of
+            elements.<br>
+            <input type="radio" name="q6" value="c"> Length refers to the number of elements, and capacity is always
+            infinite.<br>
+            <input type="radio" name="q6" value="d"> Length and capacity are the same thing in Rust.<br>
+        </div>
+
+        <div class="question">
+            <p>7. How do you add elements to a vector in Rust?</p>
+            <input type="radio" name="q7" value="a"> Using the `push` method.<br>
+            <input type="radio" name="q7" value="b"> Using the `insert` method.<br>
+            <input type="radio" name="q7" value="c"> Using the `append` method.<br>
+            <input type="radio" name="q7" value="d"> Using the `add` operator.<br>
+        </div>
+
+        <!-- Section 4: HashMaps -->
+        <div class="question">
+            <h2>Section 4: HashMaps</h2>
+            <p>8. What is the primary purpose of a HashMap in Rust?</p>
+            <input type="radio" name="q8" value="a"> To store elements in a fixed-size array.<br>
+            <input type="radio" name="q8" value="b"> To associate keys with values for efficient retrieval.<br>
+            <input type="radio" name="q8" value="c"> To sort elements in ascending order.<br>
+            <input type="radio" name="q8" value="d"> To guarantee that keys are unique.<br>
+        </div>
+
+        <div class="question">
+            <p>9. How can you check if a specific key exists in a HashMap?</p>
+            <input type="radio" name="q9" value="a"> Using the `contains` method.<br>
+            <input type="radio" name="q9" value="b"> Using the `get` method.<br>
+            <input type="radio" name="q9" value="c"> Using the `exists` method.<br>
+            <input type="radio" name="q9" value="d"> Using the `search` method.<br>
+        </div>
+
+        <!-- Section 5: Enums -->
+        <div class="question">
+            <h2>Section 5: Enums</h2>
+            <p>10. What is an enum in Rust?</p>
+            <input type="radio" name="q10" value="a"> A collection of numbers.<br>
+            <input type="radio" name="q10" value="b"> A type that represents a value that can be one of several
+            predefined
+            variants.<br>
+            <input type="radio" name="q10" value="c"> A data structure for storing key-value pairs.<br>
+            <input type="radio" name="q10" value="d"> A tool for looping over elements in an array.<br>
+        </div>
+
+        <div class="question">
+            <p>11. How can you extract the value stored within an `Option<T>` enum in Rust?</p>
+            <input type="radio" name="q11" value="a"> Using the `get` method.<br>
+            <input type="radio" name="q11" value="b"> Using the `unwrap` method.<br>
+            <input type="radio" name="q11" value="c"> Using the `expect` method.<br>
+            <input type="radio" name="q11" value="d"> Using the `match` expression.<br>
+        </div>
+
+        <!-- Section 6: Options and Results -->
+        <div class="question">
+            <h2>Section 6: Options and Results</h2>
+            <p>12. What is the purpose of the `Option<T>` type in Rust?</p>
+            <input type="radio" name="q12" value="a"> To represent a value that can be one of several predefined
+            variants.<br>
+            <input type="radio" name="q12" value="b"> To represent either a success with a value or a failure with an
+            error.<br>
+            <input type="radio" name="q12" value="c"> To represent a collection of elements.<br>
+            <input type="radio" name="q12" value="d"> To represent a fixed-size array.<br>
+        </div>
+
+        <div class="question">
+            <p>13. When should you use the `unwrap` method for `Option` and `Result` types?</p>
+            <input type="radio" name="q13" value="a"> Always, as it is safe to use in all cases.<br>
+            <input type="radio" name="q13" value="b"> When you want to safely handle errors and edge cases.<br>
+            <input type="radio" name="q13" value="c"> When you are certain that the value is not `None` or the result is
+            not
+            an `Err`.<br>
+            <input type="radio" name="q13" value="d"> When you want to ignore errors and exceptions.<br>
+        </div>
+
+        <!-- Section 7: Structs -->
+        <div class="question">
+            <h2>Section 7: Structs</h2>
+            <p>14. What is a struct in Rust?</p>
+            <input type="radio" name="q14" value="a"> A type that represents a value that can be one of several
+            predefined
+            variants.<br>
+            <input type="radio" name="q14" value="b"> A collection of key-value pairs.<br>
+            <input type="radio" name="q14" value="c"> A data structure for storing multiple values of different
+            types.<br>
+            <input type="radio" name="q14" value="d"> A way to loop over elements in an array.<br>
+        </div>
+
+        <div class="question">
+            <p>15. How do you create an instance of a struct in Rust?</p>
+            <input type="radio" name="q15" value="a"> Using the `new` method.<br>
+            <input type="radio" name="q15" value="b"> Using the `struct` keyword.<br>
+            <input type="radio" name="q15" value="c"> Using the `create` function.<br>
+            <input type="radio" name="q15" value="d"> Using the `instance` keyword.<br>
+        </div>
+
+        <input type="submit" value="Submit">
+        <button type="button" id="reset-button">Reset Exam</button>
+    </form>
+
+    <!-- Score Modal -->
+    <div id="score-modal" class="modal">
+        <div class="modal-content">
+            <h2>Your Score</h2>
+            <p id="modal-score"></p>
+            <button type="button" id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const answers = {
+                q1: "d",
+                q2: "b",
+                q3: "a",
+                q4: "a",
+                q5: "a",
+                q6: "a",
+                q7: "a",
+                q8: "b",
+                q9: "a",
+                q10: "b",
+                q11: "b",
+                q12: "b",
+                q13: "b",
+                q14: "c",
+                q15: "a",
+            };
+
+            for (let i = 1; i <= 15; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedAnswer) {
+                    const questionNumber = `q${i}`;
+                    const answerValue = selectedAnswer.value;
+                    if (answers[questionNumber] === answerValue) {
+                        selectedAnswer.parentElement.classList.add('correct-answer');
+                    } else {
+                        selectedAnswer.parentElement.classList.add('wrong-answer');
+                    }
+                } else {
+                    const unansweredQuestion = document.querySelector(`input[name="q${i}"]`);
+                    unansweredQuestion.parentElement.classList.add('unanswered');
+                }
+            }
+
+            const correctAnswers = document.querySelectorAll('.correct-answer').length;
+            const scoreElement = document.getElementById('modal-score');
+            scoreElement.textContent = `Your score: ${correctAnswers} / 15`;
+
+            // Display the modal
+            const modal = document.querySelector('.modal');
+            modal.style.display = 'block';
+        });
+
+        // Event listener for reset button
+        document.getElementById('reset-button').addEventListener('click', function () {
+            // Remove color classes from all questions
+            const questions = document.querySelectorAll('.question');
+            questions.forEach((question) => {
+                question.classList.remove('correct-answer', 'wrong-answer', 'unanswered');
+            });
+
+            // Uncheck all radio buttons
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach((radioButton) => {
+                radioButton.checked = false;
+            });
+
+            // Clear the score
+            const scoreElement = document.getElementById('modal-score');
+            scoreElement.textContent = '';
+
+            // Close the modal
+            const modal = document.querySelector('.modal');
+            modal.style.display = 'none';
+        });
+
+        // Event listener to close the modal
+        document.getElementById('close-modal').addEventListener('click', function () {
+            const modal = document.querySelector('.modal');
+            modal.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
