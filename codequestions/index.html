@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Code related questions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"
+        integrity="sha512-rdhY3cbXURo13l/WU9VlaRyaIYeJ/KBakckXIvJNAQde8DgpOmE+eZf7ha4vdqVjTtwQt69bD2wH2LXob/LB7Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/rust.min.js"
+        integrity="sha512-vdXKnAkDPs0UgYL1GxsOlhFROHdFkp7Le977KNtyEOAZ9OtctI4rccS14aedltb/CAjrqnoV7hLFX3qY92AusA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Theme -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/dracula.min.css"
+        integrity="sha512-zKpFlhUX8c+WC6H/XTJavnEpWFt2zH9BU9vu0Hry5Y+SEgG21pRMFcecS7DgDXIegXBQ3uK9puwWPP3h6WSR9g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+
+    <h3>Question 1</h3>
+    <h4>What is the output of the following code?</h4>
+    <pre><code class="language-rust">
+let x = String::from("hello");
+let y = x;
+println!("{}, world!", y);
+println!("{}, world!", x);
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q1-opt1" disabled> no, x is moved</li>
+        <li><input type="checkbox" id="q1-opt2" disabled> no, x does not implement Display</li>
+        <li><input type="checkbox" id="q1-opt3" disabled> yes</li>
+        <li><input type="checkbox" id="q1-opt4" disabled> no, x is re-borrowed</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The code will not compile because <code class="language-rust">x</code> is moved to <code
+                class="language-rust">y</code> and can no longer be used.
+            Therefore, the second <code class="language-rust">println!</code> statement will result in a compile-time
+            error. The correct
+            answer is <strong>no, x is moved</strong>.</p>
+    </details>
+
+    <h3>Question 2</h3>
+    <h4>What is the output of the following code?</h4>
+    <pre><code class="language-rust">
+{
+    let mut s1 = String::from("Hello!");
+    {
+        let mut s2 = &s1;
+        s2.push_str("World!");
+        println!("{}", s2)
+    }
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q2-opt1" disabled> prints: "Hello!World!"</li>
+        <li><input type="checkbox" id="q2-opt2" disabled> prints: "Hello! World!"</li>
+        <li><input type="checkbox" id="q2-opt3" disabled> prints: "Hello!"</li>
+        <li><input type="checkbox" id="q2-opt4" disabled> error</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The code will not compile because <code class="language-rust">s2</code> is a shared reference to <code
+                class="language-rust">s1</code>, and you cannot
+            modify a shared reference. Therefore, the line <code class="language-rust">s2.push_str("World!");</code>
+            will result in a
+            compile-time error. The correct answer is <strong>error</strong>.</p>
+    </details>
+
+    <h3>Question 3</h3>
+    <h4>What is printed?</h4>
+    <pre><code class="language-rust">
+{
+	let mut a = 50;
+	let b = &mut a;
+	a = 20;
+	println!("a: {}, b: {}", a, b);
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q3-opt1" disabled> error</li>
+        <li><input type="checkbox" id="q3-opt2" disabled> print: "a: 20, b: 50"</li>
+        <li><input type="checkbox" id="q3-opt3" disabled> print: "a: 50, b: 50"</li>
+        <li><input type="checkbox" id="q3-opt4" disabled> print: "a: 20, b: 20"</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The output of this code will be <code class="language-rust">a: 20, b: 20</code>. The variable <code
+                class="language-rust">a</code> is assigned the value
+            <code class="language-rust">50</code>, then a mutable reference to <code class="language-rust">a</code> is
+            created with <code class="language-rust">let b = &mut a;</code>.
+            The value of <code class="language-rust">a</code> is then changed to <code class="language-rust">20</code>,
+            and both <code class="language-rust">a</code> and <code class="language-rust">b</code>
+            are printed. Since both variables refer to the same memory location, they have the same value.
+            Therefore,
+            the correct answer is <strong>print: "a: 20, b: 20"</strong>.
+        </p>
+    </details>
+
+    <h3>Question 4</h3>
+    <h4>What is printed?</h4>
+    <pre><code class="language-rust">
+fn foo(s: &mut String) -> usize {
+    s.push_str("Bob");
+    s.len()
+}
+fn main() {
+    let mut s1 = String::from("Alice");
+    println!("{}", foo(&s1));
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q4-opt1" disabled> 5</li>
+        <li><input type="checkbox" id="q4-opt2" disabled> 8</li>
+        <li><input type="checkbox" id="q4-opt3" disabled> error</li>
+        <li><input type="checkbox" id="q4-opt4" disabled> 0</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The output of this code will be <code class="language-rust">8</code>. The function <code
+                class="language-rust">foo</code> takes a mutable reference to a
+            string and appends <code class="language-rust">"Bob"</code> to it. It then returns the length of
+            the string.
+            In main, a mutable
+            string named <code class="language-rust">s1</code> is created with the value <code
+                class="language-rust">"Alice"</code>. The function <code class="language-rust">foo</code>
+            is called with a reference to <code class="language-rust">s1</code>, and its return value (the
+            length of the
+            modified string) is
+            printed. Therefore, the correct answer is <strong>8</strong>.</p>
+    </details>
+
+    <h3>Question 5</h3>
+    <h4>What is printed?</h4>
+    <pre><code class="language-rust">
+let mut s1 = String::from("hello");
+{ 
+    let s2 = &s1;
+    let s3 = &s1;
+    let s4 = &mut s1;
+    println!("String is {}", s1);
+    println!("String is {}", s2);
+    println!("String is {}", s3);
+    println!("String is {}", s4);
+}
+s1.push_str(" there");
+println!("String is {}", s1);
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q5-opt1" disabled> String is hello there<br>String is hello
+            there<br>String is
+            hello there<br>String is hello there<br>String is hello there</li>
+        <li><input type="checkbox" id="q5-opt2" disabled> String is hello<br>String is hello<br>String
+            is
+            hello<br>String is hello there<br>String is hello there</li>
+        <li><input type="checkbox" id="q5-opt3" disabled> error</li>
+        <li><input type="checkbox" id="q5-opt4" disabled> String is hello<br>String is hello<br>String
+            is
+            hello<br>String is hello<br>String is hello there</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The output of this code will be:</p>
+        <pre><code class="language-rust">
+String is hello
+String is hello
+String is hello
+error[E0502]: cannot borrow `s1` as mutable because it is also borrowed as immutable
+ --&gt; src/main.rs:8:19
+</code></pre>
+        <p>Since you cannot have both mutable and immutable references to the same variable at the same
+            time in Rust,
+            attempting to use <code class="language-rust">s4</code> as a mutable reference while <code
+                class="language-rust">s2</code> and <code class="language-rust">s3</code> are
+            immutable references results in a compilation error. Therefore, the correct answer is
+            <strong>error</strong>.
+        </p>
+    </details>
+
+    <h3>Question 6</h3>
+    <h4>What is the output of the following code?</h4>
+    <pre><code class="language-rust">
+fn main() {
+    let mut vec = vec![1, 2, 3, 4, 5];
+    for num in &mut vec {
+        *num += 1;
+    }
+    println!("{:?}", vec);
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q6-opt1" disabled> [2, 3, 4, 5, 6]</li>
+        <li><input type="checkbox" id="q6-opt2" disabled> [1, 2, 3, 4, 5]</li>
+        <li><input type="checkbox" id="q6-opt3" disabled> [1, 2, 3, 4, 6]</li>
+        <li><input type="checkbox" id="q6-opt4" disabled> Compilation error</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The output of this code will be <code class="language-rust">[2, 3, 4, 5, 6]</code>. The
+            code creates a
+            mutable vector <code class="language-rust">vec</code> and then iterates over its
+            elements using a mutable
+            reference. It increments each element by 1, and the modified vector is printed at the
+            end.</p>
+    </details>
+
+    <h3>Question 7</h3>
+    <h4>What will happen when you attempt to compile the following code?</h4>
+    <pre><code class="language-rust">
+fn main() {
+    let x = 42;
+    let y = &x;
+    let z = &mut x;
+    println!("x: {}, y: {}, z: {}", x, y, z);
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q7-opt1" disabled> The code will compile and print "x:
+            42, y: 42, z: 42."</li>
+        <li><input type="checkbox" id="q7-opt2" disabled> The code will compile and print "x:
+            42, y: 42, z: 43."</li>
+        <li><input type="checkbox" id="q7-opt3" disabled> The code will not compile due to
+            conflicting mutable and
+            immutable references.</li>
+        <li><input type="checkbox" id="q7-opt4" disabled> The code will not compile due to an
+            attempt to print a mutable
+            reference.</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The correct answer is option 3. The code will not compile due to conflicting mutable
+            and immutable
+            references. You cannot have both an immutable reference (<code class="language-rust">y</code>) and a mutable
+            reference (<code class="language-rust">z</code>) to the same variable (<code class="language-rust">x</code>)
+            at the same time in Rust.</p>
+    </details>
+
+    <h3>Question 8</h3>
+    <h4>What does the following code print?</h4>
+    <pre><code class="language-rust">
+fn main() {
+    let s1 = String::from("Hello");
+    let s2 = s1;
+    println!("s1: {}, s2: {}", s1, s2);
+}
+</code></pre>
+    <ul>
+        <li><input type="checkbox" id="q8-opt1" disabled> "s1: Hello, s2: Hello"</li>
+        <li><input type="checkbox" id="q8-opt2" disabled> "s1: Hello, s2: World"</li>
+        <li><input type="checkbox" id="q8-opt3" disabled> Compilation error</li>
+        <li><input type="checkbox" id="q8-opt4" disabled> "s1: World, s2: World"</li>
+    </ul>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The correct answer is option 3. This code will result in a compilation error
+            because ownership of <code class="language-rust">s1</code> is moved to <code
+                class="language-rust">s2</code>, so you cannot use
+            <code class="language-rust">s1</code> after the move.
+        </p>
+    </details>
+
+    <h3>Question 9</h3>
+    <h4>What is the purpose of the <code class="language-rust">Option</code> type in Rust,
+        and how is it commonly used?
+    </h4>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>The <code class="language-rust">Option</code> type in Rust is used to
+            represent the presence or absence of a
+            value. It is commonly used when a value may or may not be present,
+            preventing the need for null or undefined
+            values.</p>
+        <p>The <code class="language-rust">Option</code> enum has two variants:
+        <ul>
+            <li><code class="language-rust">Some(T)</code>: Represents a value of type
+                <code class="language-rust">T</code> that is present.
+            </li>
+            <li><code class="language-rust">None</code>: Represents the absence of a
+                value.</li>
+        </ul>
+        </p>
+        <p>Common use cases for <code class="language-rust">Option</code> include:
+        <ul>
+            <li>Handling cases where a function may fail to return a value (e.g.,
+                parsing).</li>
+            <li>Avoiding null or undefined errors.</li>
+            <li>Safely checking if an item exists in a collection without causing
+                panics.</li>
+            <li>Expressing the possibility of optional values in function arguments and
+                return types.</li>
+        </ul>
+        </p>
+    </details>
+
+    <h3>Question 10</h3>
+    <h4>What is a "lifetime" in Rust, and how does it relate to borrowing and
+        references?</h4>
+    <details>
+        <summary><b>Answer</b></summary>
+        <p>In Rust, a "lifetime" is a concept that helps the compiler ensure memory
+            safety by tracking how long
+            references to data are valid. It relates to borrowing and references
+            because it defines the scope or
+            duration for which a reference is valid.</p>
+        <p>Lifetime annotations, denoted by <code class="language-rust">'a</code>,
+            are used to specify the lifetimes of
+            references in function signatures and data structures. They help the
+            compiler check that references don't
+            outlive the data they point to, preventing common programming errors
+            like dangling references.</p>
+        <p>Lifetimes are especially important when dealing with references in
+            function parameters and return values to
+            ensure that the borrowed data remains valid as long as it's needed. The
+            Rust compiler uses lifetime
+            annotations to verify that references adhere to these rules and prevent
+            data races and memory safety issues.
+        </p>
+    </details>
+
+
+    <script>hljs.highlightAll();</script>
+
+</body>
+
+</html>
